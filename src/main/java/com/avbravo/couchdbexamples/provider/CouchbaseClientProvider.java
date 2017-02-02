@@ -17,29 +17,11 @@ import com.couchbase.client.java.CouchbaseCluster;
  */
 public class CouchbaseClientProvider {
 private Cluster cluster = CouchbaseCluster.create("localhost");
-private Bucket bucket = cluster.openBucket("default");
- 
 
-    public Bucket getCouchbaseClient() {
-   bucket = cluster.openBucket("default");
-        try {
-            /**
-             * autentificacion
-             */
-            /*
-             String database = "";
-            String username = "";
-            String password = "";
-            String host = "localhost";
-            int port = 27017;
-            char[] charArray = password.toCharArray();
-            MongoCredential credential = MongoCredential.createCredential(username, database, charArray);
-            mongoClient = new MongoClient(new ServerAddress(host, port), Arrays.asList(credential));
-             */
-        } catch (Exception e) {
-            System.out.println("getMongoClient() " + e.getLocalizedMessage());
-        }
-        return bucket;
+
+    public Cluster getCluster() {
+        return cluster;
     }
+ 
 
 }
