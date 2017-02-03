@@ -21,23 +21,25 @@ public class Planetas {
     private String idplaneta;
     private String planeta;
    //@Ignore    
-    private Date fecha;
+ //   private Date fecha;
 
     public Planetas() {
     }
 
-    public Planetas(String idplaneta, String planeta, Date fecha) {
+    public Planetas(String idplaneta, String planeta) {
         this.idplaneta = idplaneta;
         this.planeta = planeta;
-        this.fecha = fecha;
+       
+    }
+
+    @Override
+    public String toString() {
+        return "Planetas{" + "idplaneta=" + idplaneta + ", planeta=" + planeta + '}';
     }
 
     
 
-    @Override
-    public String toString() {
-        return "Planetas{" + "idplaneta=" + idplaneta + ", planeta=" + planeta + ", fecha=" + fecha + '}';
-    }
+  
 
     
     
