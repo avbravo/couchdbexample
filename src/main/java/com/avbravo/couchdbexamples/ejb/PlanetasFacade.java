@@ -29,12 +29,9 @@ public class PlanetasFacade extends CouchbaseAbstractFacade<Planetas> {
 //       return mongoclientProvider.getMongoClient();
 //    }
 
- 
-   
-
     @Override
     protected Cluster getCluster() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    return  couchbseclientProvider.getCluster();
     }
 
     @Override
@@ -46,6 +43,11 @@ public class PlanetasFacade extends CouchbaseAbstractFacade<Planetas> {
     public Object findById(String key, Integer value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+ 
+   
+
+    
 
    
 

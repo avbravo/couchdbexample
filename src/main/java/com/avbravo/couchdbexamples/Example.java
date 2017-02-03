@@ -6,6 +6,7 @@
 package com.avbravo.couchdbexamples;
 
 import com.avbravo.couchdbexamples.ejb.PlanetasFacade;
+import com.avbravo.couchdbexamples.entity.Planetas;
 import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.document.json.JsonObject;
 
@@ -23,12 +24,20 @@ public class Example {
         try {
            // Planetas planetas = new Planetas();
            PlanetasFacade planetasFacade  = new PlanetasFacade();
+           Planetas planetas = new Planetas();
+           
               JsonObject arthur = JsonObject.create()
-            .put("name", "Arthur")
-            .put("email", "kingarthur@couchbase.com")
-            .put("interests", JsonArray.from("Holy Grail", "African Swallows"));
-              planetasFacade.save(arthur);
+            .put("name", "Aristides")
+            .put("email", "avbravo@gmail..com")
+            .put("interests", JsonArray.from("Java", "Nosql"));
+              if(planetasFacade.save(arthur)){
+                  System.out.println("Guardador");
+              }else{
+                  System.out.println("no se guardo "+planetasFacade.getException());
+              }
+              
         } catch (Exception e) {
+            System.out.println("Error() "+e.getLocalizedMessage());
         }
     }
 
