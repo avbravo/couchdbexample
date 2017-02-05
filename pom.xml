@@ -12,10 +12,25 @@
             <version>2.4.1</version>
         </dependency>-->
        
+<!--        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jmoordb</artifactId>
+            <version>0.1.9.2</version>
+        </dependency>-->
+<!--        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jmoordb</artifactId>
+            <version>${project.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>net.sf.flexjson</groupId>
+            <artifactId>flexjson</artifactId>
+            <version>3.3</version>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jmoordb</artifactId>
-            <version>0.1.9.1.2</version>
+            <version>0.1.9.2</version>
         </dependency>
     </dependencies>
     <properties>

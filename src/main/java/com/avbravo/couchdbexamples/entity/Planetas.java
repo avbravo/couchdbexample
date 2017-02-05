@@ -5,8 +5,9 @@
  */
 package com.avbravo.couchdbexamples.entity;
 
+
+
 import com.avbravo.jmoordb.anotations.Id;
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
