@@ -5,44 +5,25 @@
  */
 package com.avbravo.couchdbexamples;
 
-import com.avbravo.couchdbexamples.ejb.PlanetasFacade;
 import com.avbravo.couchdbexamples.entity.Planetas;
 import flexjson.JSONSerializer;
-import java.util.List;
 
 /**
  *
  * @author avbravo
  */
-public class Example {
+public class Example11 {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public void main() {
 
         try {
-            
-           //   PlanetasDaoImpl p = new PlanetasDaoImpl();
-            PlanetasFacade planetasFacade = new PlanetasFacade();
-            System.out.println("voy a crear el indice");
-          List<Planetas> l=  planetasFacade.findAll("select  * from default");
-          for(Planetas p:l){
-              System.out.println("===> "+p.toString());
-          }
-//          if(planetasFacade.createPrimaryIndex()){
-//              System.out.println("se creo");
-//          }else{
-//              System.out.println("no se creo indice "+planetasFacade.getException());
-//          }
+            PlanetasDaoImpl p = new PlanetasDaoImpl();
 //   Guardar
-//           Planetas p1= new Planetas("jupiter", "Jupiter");
-//        if(planetasFacade.save(p1)){
-//            System.out.println("guardado ");
-//        }else{
-//            System.out.println("no se guardo "+planetasFacade.getException());
-//        }
-        
+//            Planetas p1= new Planetas("tierra", "Tierra");
+//            p.insert(p1);
 //
 //          Planetas p2 = new Planetas("venus", "Venus");
 //            p.insert(p2,false);
@@ -70,8 +51,8 @@ public class Example {
 //            Planetas presultado2=   p.findByPlaneta("Marte");
 //           System.out.println("presultado2 "+presultado2.toString()); 
              
-//           Planetas s = p.query("select * from default ");
-//            System.out.println("---> "+s.toString());
+           Planetas s = p.query("select * from default ");
+            System.out.println("---> "+s.toString());
            
 //            
 //           Planetas p3= new Planetas();

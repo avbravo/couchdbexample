@@ -8,6 +8,8 @@ package com.avbravo.couchdbexamples.provider;
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;
+import com.couchbase.client.java.env.CouchbaseEnvironment;
+import com.couchbase.client.java.env.DefaultCouchbaseEnvironment;
 
 
 
@@ -16,10 +18,16 @@ import com.couchbase.client.java.CouchbaseCluster;
  * @author avbravo
  */
 public class CouchbaseClientProvider {
-private Cluster cluster = CouchbaseCluster.create("localhost");
+private Cluster cluster;
+//private Cluster cluster = CouchbaseCluster.create("localhost");
 
 
     public Cluster getCluster() {
+           CouchbaseEnvironment env = DefaultCouchbaseEnvironment.builder()
+                    .connectTimeout(10000) //10000ms = 10s, default is 5s
+                    .build();
+            System.out.println("Create connection");
+            cluster = CouchbaseCluster.create("localhost");
         return cluster;
     }
  
