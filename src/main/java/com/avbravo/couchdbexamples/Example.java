@@ -7,6 +7,9 @@ package com.avbravo.couchdbexamples;
 
 import com.avbravo.couchdbexamples.ejb.PlanetasFacade;
 import com.avbravo.couchdbexamples.entity.Planetas;
+import com.couchbase.client.java.document.JsonDocument;
+import com.couchbase.client.java.document.json.JsonArray;
+import com.couchbase.client.java.document.json.JsonObject;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +30,12 @@ public class Example {
             //   PlanetasDaoImpl p = new PlanetasDaoImpl();
 
             Planetas planetas = new Planetas();
-            find();
+//            find();
+//            findById();
+//save();
+//saveJsonObject();
+saveJsonDocument();
+            // planetasFacade.disconnect();
         } catch (Exception e) {
             System.out.println("Error() " + e.getLocalizedMessage());
         }
@@ -36,11 +44,47 @@ public class Example {
     public static void save() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
         Planetas p1 = new Planetas("jupiter", "Jupiter");
-        if (planetasFacade.save(p1)) {
+        if (planetasFacade.save(p1, false)) {
             System.out.println("guardado ");
         } else {
             System.out.println("no se guardo " + planetasFacade.getException());
         }
+    }
+
+    public static void saveJsonObject() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        JsonObject planetaJson = JsonObject.empty()
+                .put("idplaneta", "saturno")
+                .put("planeta", "Saturno");
+
+        if (planetasFacade.save(planetaJson, false)) {
+            System.out.println("guardado ");
+        } else {
+            System.out.println("no se guardo " + planetasFacade.getException());
+        }
+
+//planetasFacade.saveQueYaTieneID(doc);
+    }
+    public static void saveJsonDocument() {
+        try {
+            
+        
+          PlanetasFacade planetasFacade = new PlanetasFacade();
+         JsonObject mercurioJson= JsonObject.create()
+            .put("idplaneta", "mercurio")
+            .put("planeta", "Mercurio");
+
+JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
+
+        if (planetasFacade.saveWithPreID(doc)) {
+            System.out.println("guardado ");
+        } else {
+            System.out.println("no se guardo " + planetasFacade.getException());
+        }
+} catch (Exception e) {
+            System.out.println("saveJsonDocument() "+e.getLocalizedMessage());
+        }
+
     }
 
     public static void findAll() {
@@ -57,6 +101,20 @@ public class Example {
         list.forEach((p) -> {
             System.out.println(p.toString());
         });
+    }
+
+    public static void findById() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        Planetas planetas = new Planetas();
+        planetas.setIdplaneta("saturno");
+        Optional<Planetas> p2 = planetasFacade.findById(planetas);
+
+        if (!p2.isPresent()) {
+            System.out.println("no hay planetas");
+        } else {
+            planetas = p2.get();
+            System.out.println("el planeta es " + p2.toString());
+        }
     }
 
     public static void find() {

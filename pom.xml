@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.avbravo</groupId>
     <artifactId>couchdbexamples</artifactId>
-    <version>0.1.9.2.2</version>
+    <version>0.1.9.2.3</version>
     <packaging>jar</packaging>
     <dependencies>
 <!--        <dependency>
@@ -22,15 +22,15 @@
             <artifactId>jmoordb</artifactId>
             <version>${project.version}</version>
         </dependency>-->
-        <dependency>
+<!--        <dependency>
             <groupId>net.sf.flexjson</groupId>
             <artifactId>flexjson</artifactId>
             <version>3.3</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jmoordb</artifactId>
-            <version>0.1.9.2.1</version>
+            <version>0.1.9.2.3</version>
         </dependency>
     </dependencies>
     <properties>
