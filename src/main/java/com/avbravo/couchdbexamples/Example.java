@@ -7,8 +7,8 @@ package com.avbravo.couchdbexamples;
 
 import com.avbravo.couchdbexamples.ejb.PlanetasFacade;
 import com.avbravo.couchdbexamples.entity.Planetas;
-import flexjson.JSONSerializer;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -22,131 +22,54 @@ public class Example {
     public static void main(String[] args) {
 
         try {
-            
-           //   PlanetasDaoImpl p = new PlanetasDaoImpl();
+
             PlanetasFacade planetasFacade = new PlanetasFacade();
-            System.out.println("voy a crear el indice");
-          List<Planetas> l=  planetasFacade.findAll("select  * from default");
-          for(Planetas p:l){
-              System.out.println("===> "+p.toString());
-          }
-//          if(planetasFacade.createPrimaryIndex()){
-//              System.out.println("se creo");
-//          }else{
-//              System.out.println("no se creo indice "+planetasFacade.getException());
-//          }
-//   Guardar
-//           Planetas p1= new Planetas("jupiter", "Jupiter");
-//        if(planetasFacade.save(p1)){
-//            System.out.println("guardado ");
-//        }else{
-//            System.out.println("no se guardo "+planetasFacade.getException());
-//        }
-        
-//
-//          Planetas p2 = new Planetas("venus", "Venus");
-//            p.insert(p2,false);
-//            
-//             
-//             
+            //   PlanetasDaoImpl p = new PlanetasDaoImpl();
 
-//  Planetas p3 = new Planetas("tierra", "Tierra");
-//             p.insert(p3);
-
-
-
-
-//             //Buscar
-//            Planetas psearch  = new Planetas();
-//           psearch.setIdplaneta("sol1");
-//     
-//
-//
-//            Planetas presultado=   p.get(psearch);
-//           System.out.println("p2 "+presultado.toString()); 
-//             
-//            
-//           
-//            Planetas presultado2=   p.findByPlaneta("Marte");
-//           System.out.println("presultado2 "+presultado2.toString()); 
-             
-//           Planetas s = p.query("select * from default ");
-//            System.out.println("---> "+s.toString());
-           
-//            
-//           Planetas p3= new Planetas();
-//           p3.setIdplaneta("Planetas1");
-////         Planetas p2=   p.get(planetas);
-////            System.out.println("p2 "+p2.toString());
-//         Planetas p2=   p.get(p3);
-//            System.out.println("p2 "+p2.toString());
-            
-            
-            
-           // Planetas planetas = new Planetas();
-//           PlanetasFacade planetasFacade  = new PlanetasFacade();
-//          Planetas planetas = new Planetas("jupiter", "Jupiter");
-//
-//  EntityDocument<Planetas> document = EntityDocument.create(planetas);
-//  Repository repo = CouchbaseCluster.create().openBucket().repository();
-//  repo.upsert(document);
-  
-//          
-          
-          
-        //  planetasFacade.findAll("select  * from default");
-           
-//JsonObject user = JsonObject.empty()
-//    .put("idplaneta", "tierra")
-//    .put("planeta", "Tierra");
-//JsonDocument doc = JsonDocument.create("tierra", user);
-//
-//planetasFacade.saveQueYaTieneID(doc);
-
-
-//          
-//           
-//              JsonObject planeta = JsonObject.create()
-//           .put("idplaneta", "jupiter")
-//            .put("planeta", "Jupiter");
-//            //.put("fecha", new Date());
-////            .put("interests", JsonArray.from("Java", "Nosql"));
-//              if(planetasFacade.save(planeta)){
-//                  System.out.println("Guardado");
-//              }else{
-//                  System.out.println("no se guardo "+planetasFacade.getException());
-//              }
-//              
+            Planetas planetas = new Planetas();
+            find();
         } catch (Exception e) {
-            System.out.println("Error() "+e.getLocalizedMessage());
+            System.out.println("Error() " + e.getLocalizedMessage());
         }
     }
-    
-//     public static Planetas insert(Planetas entity) {
-//         JSONSerializer serializer = new JSONSerializer();
-//    String key = getNextUid( entity.getClassName() );
-//    entity.setObjectId(key);
-//    String jsonString = serializer.deepSerialize(entity);
-//    RawJsonDocument jsonDoc = RawJsonDocument.create(key, jsonString);
-//    RawJsonDocument retJsonDoc = db.insert(jsonDoc);
-//    Planetas newPlanetas = new JSONDeserializer<Planetas>().deserialize( retJsonDoc.content() , Planetas.class );
-//    return newPlanetas;
-//}
 
-    
-    private void test(){
-         JSONSerializer serializer = new JSONSerializer();
-//       Cluster cluster = CouchbaseCluster.create("localhost");
-//        Bucket bucket = cluster.openBucket("default");
-    
-           //  String jsonString = serializer.deepSerialize(planetas);
-            // System.out.println("to String "+jsonString);
-//    RawJsonDocument jsonDocument = RawJsonDocument.create(planetas.getIdplaneta(), jsonString);
-//    RawJsonDocument retrievedJsonDocument = bucket.get(jsonDocument);
-  //Planetas retrievedPlanetas = new JSONDeserializer<Planetas>().deserialize(retrievedJsonDocument.content(), Planetas.class);
-  //Planetas retrievedPlanetas = new JSONDeserializer<Planetas>().deserialize("{default={idplaneta=marte, planeta=Marte}}", Planetas.class);
-//            System.out.println("---> "+retrievedPlanetas.getIdplaneta() + "  "+retrievedPlanetas.getPlaneta());
-//            System.out.println("retrievedPlanetas ==== "+retrievedPlanetas.toString());
-//            System.out.println("============
+    public static void save() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        Planetas p1 = new Planetas("jupiter", "Jupiter");
+        if (planetasFacade.save(p1)) {
+            System.out.println("guardado ");
+        } else {
+            System.out.println("no se guardo " + planetasFacade.getException());
+        }
     }
+
+    public static void findAll() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        List<Planetas> list = planetasFacade.findAll();
+        list.forEach((p) -> {
+            System.out.println(p.toString());
+        });
+    }
+
+    public static void findBy() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        List<Planetas> list = planetasFacade.findBy("select  * from default where planeta='Marte'");
+        list.forEach((p) -> {
+            System.out.println(p.toString());
+        });
+    }
+
+    public static void find() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        Planetas planetas = new Planetas();
+        Optional<Planetas> p2 = planetasFacade.find("select * from default where planeta ='Marte'");
+
+        if (!p2.isPresent()) {
+            System.out.println("no hay planetas");
+        } else {
+            planetas = p2.get();
+            System.out.println("el planeta es " + p2.toString());
+        }
+    }
+
 }

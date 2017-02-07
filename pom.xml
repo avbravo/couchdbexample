@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.avbravo</groupId>
     <artifactId>couchdbexamples</artifactId>
-    <version>0.1.9.1.2</version>
+    <version>0.1.9.2.2</version>
     <packaging>jar</packaging>
     <dependencies>
 <!--        <dependency>

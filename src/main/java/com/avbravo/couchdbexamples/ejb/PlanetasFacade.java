@@ -8,9 +8,7 @@ package com.avbravo.couchdbexamples.ejb;
 import com.avbravo.couchdbexamples.entity.Planetas;
 import com.avbravo.couchdbexamples.provider.CouchbaseClientProvider;
 import com.avbravo.jmoordb.facade.CouchbaseAbstractFacade;
-import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.Cluster;
-import com.mongodb.MongoClient;
 import org.bson.Document;
 
 
@@ -34,17 +32,17 @@ public class PlanetasFacade extends CouchbaseAbstractFacade<Planetas> {
     return  couchbseclientProvider.getCluster();
     }
 
-    @Override
+     @Override
     public Object findById(String key, String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return find(key, value);
     }
 
     @Override
     public Object findById(String key, Integer value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return find(key, value);
     }
 
- 
+  
    
 
     
