@@ -32,12 +32,13 @@ public class Example {
             //   PlanetasDaoImpl p = new PlanetasDaoImpl();
 
             Planetas planetas = new Planetas();
-            deleteAll();
+//        deleteAll();
 //            find();
 //            findById();
-//save();
-//saveJsonObject();
+save();
+saveJsonObject();
 //saveJsonDocument();
+update();
 //findN1qlQuery();
             // planetasFacade.disconnect();
         } catch (Exception e) {
@@ -131,6 +132,26 @@ JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
         } else {
             planetas = p2.get();
             System.out.println("el planeta es " + p2.toString());
+        }
+    }
+    public static void update() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        Planetas planetas = new Planetas();
+        planetas.setIdplaneta("saturno");
+        Optional<Planetas> p2 = planetasFacade.findById(planetas);
+
+        if (!p2.isPresent()) {
+            System.out.println("no hay planetas");
+        } else {
+            
+            planetas = p2.get();
+            planetas.setPlaneta("Saturno actualizado");
+            if(planetasFacade.update(planetas)){
+                System.out.println("se actualizo");
+            }
+            else{
+                System.out.println("No se actualizo "+planetasFacade.getException());
+            }
         }
     }
     public static void deleteValue() {
