@@ -22,11 +22,6 @@ public class PlanetasFacade extends CouchbaseAbstractFacade<Planetas> {
         super(Planetas.class, "default", "planetas");
     }
 
-//    @Override
-//    protected Bucket getBucket() {
-//       return mongoclientProvider.getMongoClient();
-//    }
-
     @Override
     protected Cluster getCluster() {
     return  couchbseclientProvider.getCluster();
@@ -42,14 +37,5 @@ public class PlanetasFacade extends CouchbaseAbstractFacade<Planetas> {
         return find(key, value);
     }
 
-  
-   
-
-    
-
-   
-
-  
-  
 
 }

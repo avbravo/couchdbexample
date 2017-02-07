@@ -10,6 +10,8 @@ import com.avbravo.couchdbexamples.entity.Planetas;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.document.json.JsonObject;
+import com.couchbase.client.java.query.N1qlQuery;
+import static com.couchbase.client.java.query.Select.select;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +32,13 @@ public class Example {
             //   PlanetasDaoImpl p = new PlanetasDaoImpl();
 
             Planetas planetas = new Planetas();
+            deleteAll();
 //            find();
 //            findById();
 //save();
 //saveJsonObject();
-saveJsonDocument();
+//saveJsonDocument();
+//findN1qlQuery();
             // planetasFacade.disconnect();
         } catch (Exception e) {
             System.out.println("Error() " + e.getLocalizedMessage());
@@ -102,6 +106,19 @@ JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
             System.out.println(p.toString());
         });
     }
+    public static void findN1qlQuery() {
+        
+        N1qlQuery query = N1qlQuery
+                .simple(select("*")
+                .from("default")
+                .limit(10));
+        
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        List<Planetas> list = planetasFacade.findBy(query);
+        list.forEach((p) -> {
+            System.out.println(p.toString());
+        });
+    }
 
     public static void findById() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
@@ -114,6 +131,46 @@ JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
         } else {
             planetas = p2.get();
             System.out.println("el planeta es " + p2.toString());
+        }
+    }
+    public static void deleteValue() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+       
+            if(planetasFacade.delete("mercurio")){
+                System.out.println("se removio");
+            }else{
+                System.out.println("no se pudo eliminar "+planetasFacade.getException());
+            }
+        
+      
+    }
+    public static void deleteAll() {
+       PlanetasFacade planetasFacade = new PlanetasFacade();
+
+if(planetasFacade.deleteAll()){
+System.out.println("se eliminaron todos los documentos");
+}else{
+System.out.println("no se eliminaron todos los documentos "+planetasFacade.getException());
+}
+        
+      
+    }
+    public static void delete() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        Planetas planetas = new Planetas();
+        planetas.setIdplaneta("saturno");
+        Optional<Planetas> p2 = planetasFacade.findById(planetas);
+
+        if (!p2.isPresent()) {
+            System.out.println("no hay planetas");
+        } else {
+            planetas = p2.get();
+            if(planetasFacade.delete(planetas)){
+                System.out.println("se removio");
+            }else{
+                System.out.println("no se pudo eliminar "+planetasFacade.getException());
+            }
+        
         }
     }
 
@@ -131,3 +188,8 @@ JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
     }
 
 }
+
+
+
+
+

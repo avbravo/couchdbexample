@@ -5,7 +5,6 @@
  */
 package com.avbravo.couchdbexamples.provider;
 
-import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;
 import com.couchbase.client.java.env.CouchbaseEnvironment;
@@ -19,7 +18,6 @@ import com.couchbase.client.java.env.DefaultCouchbaseEnvironment;
  */
 public class CouchbaseClientProvider {
 private Cluster cluster;
-//private Cluster cluster = CouchbaseCluster.create("localhost");
 
 
     public Cluster getCluster() {
