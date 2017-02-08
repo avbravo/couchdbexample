@@ -7,11 +7,17 @@ package com.avbravo.couchdbexamples;
 
 import com.avbravo.couchdbexamples.ejb.PlanetasFacade;
 import com.avbravo.couchdbexamples.entity.Planetas;
+import com.couchbase.client.java.PersistTo;
+import com.couchbase.client.java.ReplicateTo;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.document.json.JsonObject;
 import com.couchbase.client.java.query.N1qlQuery;
 import static com.couchbase.client.java.query.Select.select;
+import com.couchbase.client.java.search.SearchQuery;
+import com.couchbase.client.java.search.facet.SearchFacet;
+import com.couchbase.client.java.search.queries.MatchQuery;
+import com.couchbase.client.java.search.result.SearchQueryResult;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,9 +43,12 @@ public class Example {
 //            findById();
 //            save();
 //            saveJsonObject();
-replace();
+//replace();
+//upsert();
+//upsertReplicate();
+            fullTextSearchMatch();
 //saveJsonDocument();
-        //    update();
+            //    update();
 //findN1qlQuery();
             // planetasFacade.disconnect();
         } catch (Exception e) {
@@ -109,6 +118,53 @@ replace();
         });
     }
 
+    public static void fullTextSearchMatch() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+
+        MatchQuery fts = SearchQuery.match("term");
+
+        List<Planetas> list = planetasFacade.fullTexSearch(fts);
+        list.forEach((p) -> {
+            System.out.println(p.toString());
+        });
+    }
+
+    public static void fullTextSearchQueryType() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+
+        MatchQuery fts = SearchQuery.match("term")
+                //query options:
+                .fuzziness(2).field("content");
+        SearchQuery query = new SearchQuery("default", fts)
+                //search options:
+                //will show value for idplaneta and planeta
+                .fields("idplaneta", "planeta")
+                //will have max 3 hits
+                .limit(3);
+
+        List<Planetas> list = planetasFacade.fullTexSearch(fts);
+        list.forEach((p) -> {
+            System.out.println(p.toString());
+        });
+    }
+    public static void fullTextSearchQueryFacet() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+
+        MatchQuery fts = SearchQuery.match("term")
+                //query options:
+                .fuzziness(2).field("content");
+ SearchQuery query = new SearchQuery("travel-search", fts)
+    //will have max 3 hits
+    .limit(3)
+    //will have a "category" facet on the top 3 countries in terms of hits
+    .addFacet("planetas",SearchFacet.term("planetas", 3));
+
+        List<Planetas> list = planetasFacade.fullTexSearch(fts);
+        list.forEach((p) -> {
+            System.out.println(p.toString());
+        });
+    }
+
     public static void findN1qlQuery() {
 
         N1qlQuery query = N1qlQuery
@@ -156,9 +212,10 @@ replace();
             }
         }
     }
-/**
- * 
- */
+
+    /**
+     *
+     */
     public static void replace() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
         JsonObject content = JsonObject.empty().put("idplaneta", "saturno")
@@ -172,13 +229,28 @@ replace();
         }
 
     }
+
     public static void upsert() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
         JsonObject content = JsonObject.empty().put("idplaneta", "saturno")
-                .put("planeta", "Saturno replace");
+                .put("planeta", "Saturno ");
         JsonDocument doc = JsonDocument.create("saturno", content);
 
         if (planetasFacade.upsert(doc)) {
+            System.out.println("se reemplazo");
+        } else {
+            System.out.println("No se reemplazo " + planetasFacade.getException());
+        }
+
+    }
+
+    public static void upsertReplicate() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        JsonObject content = JsonObject.empty().put("idplaneta", "saturno")
+                .put("planeta", "Saturno ");
+        JsonDocument doc = JsonDocument.create("saturno", content);
+
+        if (planetasFacade.upsert(doc, PersistTo.MASTER, ReplicateTo.TWO)) {
             System.out.println("se reemplazo");
         } else {
             System.out.println("No se reemplazo " + planetasFacade.getException());
