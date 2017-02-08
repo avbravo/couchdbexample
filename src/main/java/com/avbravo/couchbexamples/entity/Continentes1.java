@@ -18,13 +18,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class Continentes {
+public class Continentes1 {
 
     @Id
     private String idcontinente;
     private String continente;
-    @Embedded
-    private List<Planetas> planetas;
+    @Referenced(documment = "Planetas", field = "idplaneta",javatype="String", lazy = false,facade="com.avbravo.couchbaseexamples.ejb.PlanetasFacade")
+    private Planetas planetas;
 
     @Override
     public String toString() {

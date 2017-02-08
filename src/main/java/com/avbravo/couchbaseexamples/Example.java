@@ -18,6 +18,7 @@ import static com.couchbase.client.java.query.Select.select;
 import com.couchbase.client.java.search.SearchQuery;
 import com.couchbase.client.java.search.facet.SearchFacet;
 import com.couchbase.client.java.search.queries.MatchQuery;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,11 +96,20 @@ findAllContinentes();
         if (!p2.isPresent()) {
             System.out.println("no hay planetas "+planetasFacade.getException());
         } else {
-            planetas = p2.get();
+        
+            Planetas planetas3 = new Planetas();
+            planetas3.setIdplaneta("jupiter");
+            Optional<Planetas> p3 = planetasFacade.findById(planetas3);
+            
+            List<Planetas> list = new ArrayList<>();
+            list.add(p2.get());
+            list.add(p3.get());
             Continentes continentes = new Continentes();
             continentes.setIdcontinente("america");
             continentes.setContinente("America");
-            continentes.setPlanetas(planetas);
+            
+       //     continentes.setPlanetas(p2.get());
+//            continentes.setPlanetas(list);
             if(continentesFacade.save(continentes,false)){
                 System.out.println("continente guardado");
             }else{
