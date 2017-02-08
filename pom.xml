@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.avbravo</groupId>
     <artifactId>couchdbexamples</artifactId>
-    <version>0.1.9.2.3</version>
+    <version>0.1.9.4.1</version>
     <packaging>jar</packaging>
     <dependencies>
 <!--        <dependency>
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jmoordb</artifactId>
-            <version>0.1.9.3</version>
+            <version>0.1.9.4.1</version>
         </dependency>
     </dependencies>
     <properties>
