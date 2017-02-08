@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.couchdbexamples;
+package com.avbravo.couchbaseexamples;
 
-import com.avbravo.couchdbexamples.entity.Planetas;
+import com.avbravo.couchbexamples.entity.Planetas;
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;

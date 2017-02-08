@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.couchdbexamples.ejb;
+package com.avbravo.couchbaseexamples.ejb;
 
-import com.avbravo.couchdbexamples.entity.Planetas;
-import com.avbravo.couchdbexamples.provider.CouchbaseClientProvider;
+import com.avbravo.couchbexamples.entity.Planetas;
+import com.avbravo.couchbaseexamples.provider.CouchbaseClientProvider;
 import com.avbravo.jmoordb.facade.CouchbaseAbstractFacade;
 import com.couchbase.client.java.Cluster;
 import org.bson.Document;
@@ -19,7 +19,7 @@ import org.bson.Document;
 public class PlanetasFacade extends CouchbaseAbstractFacade<Planetas> {
  CouchbaseClientProvider couchbseclientProvider = new  CouchbaseClientProvider();
     public PlanetasFacade() {
-        super(Planetas.class, "default", "planetas");
+        super(Planetas.class, "planetas", "planetas");
     }
 
     @Override

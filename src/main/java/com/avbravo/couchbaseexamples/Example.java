@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.couchdbexamples;
+package com.avbravo.couchbaseexamples;
 
-import com.avbravo.couchdbexamples.ejb.PlanetasFacade;
-import com.avbravo.couchdbexamples.entity.Planetas;
+import com.avbravo.couchbaseexamples.ejb.ContinentesFacade;
+import com.avbravo.couchbaseexamples.ejb.PlanetasFacade;
+import com.avbravo.couchbexamples.entity.Continentes;
+import com.avbravo.couchbexamples.entity.Planetas;
 import com.couchbase.client.java.PersistTo;
 import com.couchbase.client.java.ReplicateTo;
 import com.couchbase.client.java.document.JsonDocument;
-import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.document.json.JsonObject;
 import com.couchbase.client.java.query.N1qlQuery;
 import static com.couchbase.client.java.query.Select.select;
 import com.couchbase.client.java.search.SearchQuery;
 import com.couchbase.client.java.search.facet.SearchFacet;
 import com.couchbase.client.java.search.queries.MatchQuery;
-import com.couchbase.client.java.search.result.SearchQueryResult;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,20 +33,31 @@ public class Example {
     public static void main(String[] args) {
 
         try {
+//            ContinentesFacade continentesFacade = new ContinentesFacade();
+//            PlanetasFacade planetasFacade = new PlanetasFacade();
+//            //   PlanetasDaoImpl p = new PlanetasDaoImpl();
+//
+//            Planetas planetas = new Planetas();
+//           
+//crearIndiceContinentes();
+//crearIndicePlanetas();
+           
+//findAll();
 
-            PlanetasFacade planetasFacade = new PlanetasFacade();
-            //   PlanetasDaoImpl p = new PlanetasDaoImpl();
+       //    save();
+         // saveJsonObject();
+//saveContinentes();
+findAllContinentes();
 
-            Planetas planetas = new Planetas();
+
 //        deleteAll();
 //            find();
 //            findById();
-//            save();
-//            saveJsonObject();
+
 //replace();
 //upsert();
 //upsertReplicate();
-            fullTextSearchMatch();
+//            fullTextSearchMatch();
 //saveJsonDocument();
             //    update();
 //findN1qlQuery();
@@ -56,6 +67,14 @@ public class Example {
         }
     }
 
+    public static void crearIndiceContinentes(){
+                ContinentesFacade continentesFacade = new ContinentesFacade();
+                continentesFacade.createPrimaryIndex();
+    }
+    public static void crearIndicePlanetas(){
+                PlanetasFacade planetasFacade = new PlanetasFacade();
+                planetasFacade.createPrimaryIndex();
+    }
     public static void save() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
         Planetas p1 = new Planetas("jupiter", "Jupiter");
@@ -66,6 +85,38 @@ public class Example {
         }
     }
 
+    public static void saveContinentes() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        ContinentesFacade continentesFacade = new ContinentesFacade();
+        Planetas planetas = new Planetas();
+        planetas.setIdplaneta("saturno");
+        Optional<Planetas> p2 = planetasFacade.findById(planetas);
+
+        if (!p2.isPresent()) {
+            System.out.println("no hay planetas "+planetasFacade.getException());
+        } else {
+            planetas = p2.get();
+            Continentes continentes = new Continentes();
+            continentes.setIdcontinente("america");
+            continentes.setContinente("America");
+            continentes.setPlanetas(planetas);
+            if(continentesFacade.save(continentes,false)){
+                System.out.println("continente guardado");
+            }else{
+                System.out.println("no se pudo guardar el continente "+continentesFacade.getException());
+            }
+           
+        }
+
+    }
+
+     public static void findAllContinentes() {
+     ContinentesFacade continentesFacade = new ContinentesFacade();
+        List<Continentes> list = continentesFacade.findAll();
+        list.forEach((p) -> {
+            System.out.println(p.toString());
+        });
+    }
     public static void saveJsonObject() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
         JsonObject planetaJson = JsonObject.empty()
@@ -105,6 +156,9 @@ public class Example {
     public static void findAll() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
         List<Planetas> list = planetasFacade.findAll();
+        if(list.isEmpty()){
+            System.out.println("No hay registros de planetas "+planetasFacade.getException());
+        }
         list.forEach((p) -> {
             System.out.println(p.toString());
         });
@@ -147,17 +201,18 @@ public class Example {
             System.out.println(p.toString());
         });
     }
+
     public static void fullTextSearchQueryFacet() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
 
         MatchQuery fts = SearchQuery.match("term")
                 //query options:
                 .fuzziness(2).field("content");
- SearchQuery query = new SearchQuery("travel-search", fts)
-    //will have max 3 hits
-    .limit(3)
-    //will have a "category" facet on the top 3 countries in terms of hits
-    .addFacet("planetas",SearchFacet.term("planetas", 3));
+        SearchQuery query = new SearchQuery("travel-search", fts)
+                //will have max 3 hits
+                .limit(3)
+                //will have a "category" facet on the top 3 countries in terms of hits
+                .addFacet("planetas", SearchFacet.term("planetas", 3));
 
         List<Planetas> list = planetasFacade.fullTexSearch(fts);
         list.forEach((p) -> {
