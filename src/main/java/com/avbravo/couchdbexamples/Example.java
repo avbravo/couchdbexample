@@ -35,10 +35,11 @@ public class Example {
 //        deleteAll();
 //            find();
 //            findById();
-save();
-saveJsonObject();
+//            save();
+//            saveJsonObject();
+replace();
 //saveJsonDocument();
-update();
+        //    update();
 //findN1qlQuery();
             // planetasFacade.disconnect();
         } catch (Exception e) {
@@ -70,24 +71,24 @@ update();
 
 //planetasFacade.saveQueYaTieneID(doc);
     }
+
     public static void saveJsonDocument() {
         try {
-            
-        
-          PlanetasFacade planetasFacade = new PlanetasFacade();
-         JsonObject mercurioJson= JsonObject.create()
-            .put("idplaneta", "mercurio")
-            .put("planeta", "Mercurio");
 
-JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
+            PlanetasFacade planetasFacade = new PlanetasFacade();
+            JsonObject mercurioJson = JsonObject.create()
+                    .put("idplaneta", "mercurio")
+                    .put("planeta", "Mercurio");
 
-        if (planetasFacade.saveWithPreID(doc)) {
-            System.out.println("guardado ");
-        } else {
-            System.out.println("no se guardo " + planetasFacade.getException());
-        }
-} catch (Exception e) {
-            System.out.println("saveJsonDocument() "+e.getLocalizedMessage());
+            JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
+
+            if (planetasFacade.saveWithPreID(doc)) {
+                System.out.println("guardado ");
+            } else {
+                System.out.println("no se guardo " + planetasFacade.getException());
+            }
+        } catch (Exception e) {
+            System.out.println("saveJsonDocument() " + e.getLocalizedMessage());
         }
 
     }
@@ -107,13 +108,14 @@ JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
             System.out.println(p.toString());
         });
     }
+
     public static void findN1qlQuery() {
-        
+
         N1qlQuery query = N1qlQuery
                 .simple(select("*")
-                .from("default")
-                .limit(10));
-        
+                        .from("default")
+                        .limit(10));
+
         PlanetasFacade planetasFacade = new PlanetasFacade();
         List<Planetas> list = planetasFacade.findBy(query);
         list.forEach((p) -> {
@@ -134,6 +136,7 @@ JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
             System.out.println("el planeta es " + p2.toString());
         }
     }
+
     public static void update() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
         Planetas planetas = new Planetas();
@@ -143,39 +146,68 @@ JsonDocument doc = JsonDocument.create("mercurio", mercurioJson);
         if (!p2.isPresent()) {
             System.out.println("no hay planetas");
         } else {
-            
+
             planetas = p2.get();
             planetas.setPlaneta("Saturno actualizado");
-            if(planetasFacade.update(planetas)){
+            if (planetasFacade.update(planetas)) {
                 System.out.println("se actualizo");
-            }
-            else{
-                System.out.println("No se actualizo "+planetasFacade.getException());
+            } else {
+                System.out.println("No se actualizo " + planetasFacade.getException());
             }
         }
     }
+/**
+ * 
+ */
+    public static void replace() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        JsonObject content = JsonObject.empty().put("idplaneta", "saturno")
+                .put("planeta", "Saturno replace");
+        JsonDocument doc = JsonDocument.create("saturno", content);
+
+        if (planetasFacade.replace(doc)) {
+            System.out.println("se reemplazo");
+        } else {
+            System.out.println("No se reemplazo " + planetasFacade.getException());
+        }
+
+    }
+    public static void upsert() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+        JsonObject content = JsonObject.empty().put("idplaneta", "saturno")
+                .put("planeta", "Saturno replace");
+        JsonDocument doc = JsonDocument.create("saturno", content);
+
+        if (planetasFacade.upsert(doc)) {
+            System.out.println("se reemplazo");
+        } else {
+            System.out.println("No se reemplazo " + planetasFacade.getException());
+        }
+
+    }
+
     public static void deleteValue() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
-       
-            if(planetasFacade.delete("mercurio")){
-                System.out.println("se removio");
-            }else{
-                System.out.println("no se pudo eliminar "+planetasFacade.getException());
-            }
-        
-      
-    }
-    public static void deleteAll() {
-       PlanetasFacade planetasFacade = new PlanetasFacade();
 
-if(planetasFacade.deleteAll()){
-System.out.println("se eliminaron todos los documentos");
-}else{
-System.out.println("no se eliminaron todos los documentos "+planetasFacade.getException());
-}
-        
-      
+        if (planetasFacade.delete("mercurio")) {
+            System.out.println("se removio");
+        } else {
+            System.out.println("no se pudo eliminar " + planetasFacade.getException());
+        }
+
     }
+
+    public static void deleteAll() {
+        PlanetasFacade planetasFacade = new PlanetasFacade();
+
+        if (planetasFacade.deleteAll()) {
+            System.out.println("se eliminaron todos los documentos");
+        } else {
+            System.out.println("no se eliminaron todos los documentos " + planetasFacade.getException());
+        }
+
+    }
+
     public static void delete() {
         PlanetasFacade planetasFacade = new PlanetasFacade();
         Planetas planetas = new Planetas();
@@ -186,12 +218,12 @@ System.out.println("no se eliminaron todos los documentos "+planetasFacade.getEx
             System.out.println("no hay planetas");
         } else {
             planetas = p2.get();
-            if(planetasFacade.delete(planetas)){
+            if (planetasFacade.delete(planetas)) {
                 System.out.println("se removio");
-            }else{
-                System.out.println("no se pudo eliminar "+planetasFacade.getException());
+            } else {
+                System.out.println("no se pudo eliminar " + planetasFacade.getException());
             }
-        
+
         }
     }
 
@@ -209,10 +241,3 @@ System.out.println("no se eliminaron todos los documentos "+planetasFacade.getEx
     }
 
 }
-
-
-
-
-
-
-
