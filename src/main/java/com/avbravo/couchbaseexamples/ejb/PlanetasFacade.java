@@ -7,7 +7,7 @@ package com.avbravo.couchbaseexamples.ejb;
 
 import com.avbravo.couchbexamples.entity.Planetas;
 import com.avbravo.couchbaseexamples.provider.CouchbaseClientProvider;
-import com.avbravo.jmoordb.facade.CouchbaseAbstractFacade;
+import com.avbravo.jmoordb.couchbase.facade.CouchbaseAbstractFacade;
 import com.couchbase.client.java.Cluster;
 import org.bson.Document;
 
@@ -29,12 +29,12 @@ public class PlanetasFacade extends CouchbaseAbstractFacade<Planetas> {
 
      @Override
     public Object findById(String key, String value) {
-        return find(key, value);
+        return search(key, value);
     }
 
     @Override
     public Object findById(String key, Integer value) {
-        return find(key, value);
+        return search(key, value);
     }
 
 

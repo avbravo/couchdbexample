@@ -5,7 +5,6 @@
  */
 package com.avbravo.couchbexamples.entity;
 
-import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.List;
@@ -23,7 +22,7 @@ public class Continentes {
     @Id
     private String idcontinente;
     private String continente;
-    @Embedded
+    @Referenced(documment = "planetas",field = "idplaneta",javatype = "String",lazy = false,facade = "com.avbravo.couchbaseexamples.ejb.PlanetasFacade")
     private List<Planetas> planetas;
 
     @Override

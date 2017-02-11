@@ -34,7 +34,16 @@ public class Example {
     public static void main(String[] args) {
 
         try {
-//            ContinentesFacade continentesFacade = new ContinentesFacade();
+//           ContinentesFacade continentesFacade = new ContinentesFacade();
+//           Continentes c= continentesFacade.search("idcontinente","america");
+//           if(c == null){
+//               System.out.println("es nulo");
+//           }else{
+//                   System.out.println("Continentes "+c.toString());
+//               System.out.println("no es nulo");
+//           }
+   //        findAllContinentes();
+        
 //            PlanetasFacade planetasFacade = new PlanetasFacade();
 //            //   PlanetasDaoImpl p = new PlanetasDaoImpl();
 //
@@ -108,7 +117,7 @@ findAllContinentes();
             continentes.setIdcontinente("america");
             continentes.setContinente("America");
             
-       //     continentes.setPlanetas(p2.get());
+            //continentes.setPlanetas(p2.get());
        continentes.setPlanetas(list);
             if(continentesFacade.save(continentes,false)){
                 System.out.println("continente guardado");

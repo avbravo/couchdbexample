@@ -30,7 +30,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jmoordb</artifactId>
-            <version>0.1.9.5</version>
+            <version>0.1.9.6</version>
         </dependency>
     </dependencies>
     <properties>
