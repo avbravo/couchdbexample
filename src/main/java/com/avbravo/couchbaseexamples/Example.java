@@ -45,15 +45,15 @@ public class Example {
            
 //findAll();
 
-       //    save();
-         // saveJsonObject();
+//        save();
+//      saveJsonObject();
 //saveContinentes();
 findAllContinentes();
 
 
 //        deleteAll();
 //            find();
-//            findById();
+  //          findById();
 
 //replace();
 //upsert();
@@ -109,7 +109,7 @@ findAllContinentes();
             continentes.setContinente("America");
             
        //     continentes.setPlanetas(p2.get());
-//            continentes.setPlanetas(list);
+       continentes.setPlanetas(list);
             if(continentesFacade.save(continentes,false)){
                 System.out.println("continente guardado");
             }else{
