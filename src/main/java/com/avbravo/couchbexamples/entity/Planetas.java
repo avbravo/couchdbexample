@@ -8,6 +8,7 @@ package com.avbravo.couchbexamples.entity;
 
 
 import com.avbravo.jmoordb.anotations.Id;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,8 +22,6 @@ public class Planetas {
 @Id
     private String idplaneta;
     private String planeta;
-   //@Ignore    
- //   private Date fecha;
 
     public Planetas() {
     }
@@ -37,11 +36,6 @@ public class Planetas {
     public String toString() {
         return "Planetas{" + "idplaneta=" + idplaneta + ", planeta=" + planeta + '}';
     }
-
     
-
-  
-
-    
-    
+        
 }
